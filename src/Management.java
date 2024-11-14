@@ -16,5 +16,18 @@ public class Management {
 
     }
 
+    public void addStudent(String name , int age , double gpa){
+        data.createStudent(new Student(data.getStudentList().size()+1,name,age,gpa));
+    }
+
+    public void removeStudent (int id){
+        data.deleteStudent(id);
+    }
+
+    public void updateStudent (int id,String name , int age, double gpa){
+        data.putStudent(id,name,age,gpa);
+    }
+
+
 
 }
