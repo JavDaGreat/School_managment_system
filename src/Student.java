@@ -17,7 +17,7 @@ public class Student {
 
     @Override
     public String toString(){
-        return String.format("Name: %-10s  ID: %-5d  Age: %-3d", name, studentId, age);
+        return String.format("Name: %-10s  ID: %-5d  Age: %-3d GPA: %-3.1f", name, studentId, age,gpa);
 
     }
     public String getName() {
@@ -27,6 +27,10 @@ public class Student {
         return studentId;
     }
 
+
+    public double getGpa() {
+        return gpa;
+    }
 
     public void setStudentId(int studentId) {
         this.studentId = studentId;

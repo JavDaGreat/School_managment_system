@@ -1,3 +1,4 @@
+import java.io.FileWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ public class Database {
         return courseList;
     }
 
+
     public void initiateStudents(List<Student> studentList) {
 
         studentList.add(new Student(1, "Alex", 20, 2.1));
@@ -37,16 +39,48 @@ public class Database {
 
 
     public void initiateCourses(List<Course> courseList) {
-        courseList.add(new Course(101, "Introduction to Java", "Dr. Smith", 3, List.of("David","Eva","Ivy")));
-        courseList.add(new Course(102, "Data Structures", "Prof. Johnson", 4, List.of("Henry","Frank","Grace")));
-        courseList.add(new Course(103, "Web Development", "Dr. Brown", 3, List.of("Lily","Jack","Ivy")));
-        courseList.add(new Course(104, "Operating Systems", "Prof. Davis", 4, List.of("Ben","Eva","Clara")));
-        courseList.add(new Course(105, "Database Management", "Dr. Miller", 3, List.of("Clara","Alex","Henry")));
-        courseList.add(new Course(106, "Computer Networks", "Prof. Wilson", 3, List.of("David","Eva","Jack")));
-        courseList.add(new Course(107, "AI Development", "Dr. Lee", 4, List.of("Henry","Alex","David")));
-        courseList.add(new Course(108, "Software Engineering", "Prof. Taylor", 3, List.of("Jack","Ivy","Eva")));
-        courseList.add(new Course(109, "Machine Learning", "Dr. Anderson", 4, List.of("David","Ben","Clara")));
-        courseList.add(new Course(110, "Discrete Mathematics", "Prof. Thomas", 3, List.of("Ivy","Clara","Alex")));
+        courseList.add(new Course(101, "Introduction to Java", "Dr. Smith", 1, new ArrayList<>(List.of("David","Eva","Ivy","Henry","Frank","Grace"))));
+        courseList.add(new Course(102, "Data Structures", "Prof. Johnson", 4, new ArrayList<>(List.of("Henry","Frank","Grace"))));
+        courseList.add(new Course(103, "Web Development", "Dr. Brown", 2, new ArrayList<>(List.of("Lily","Jack"))));
+        courseList.add(new Course(104, "Operating Systems", "Prof. Davis", 4,new ArrayList<>( List.of("Ben","Eva","Clara"))));
+        courseList.add(new Course(105, "Database Management", "Dr. Miller", 2, new ArrayList<>(List.of("Clara","Alex","Henry","Jack"))));
+        courseList.add(new Course(106, "Computer Networks", "Prof. Wilson", 3, new ArrayList<>(List.of("David"))));
+        courseList.add(new Course(107, "AI Development", "Dr. Lee", 4, new ArrayList<>(List.of("Henry"))));
+        courseList.add(new Course(108, "Software Engineering", "Prof. Taylor", 3,new ArrayList<>( List.of("Jack","Ivy","Eva","Clara","David"))));
+        courseList.add(new Course(109, "Machine Learning", "Dr. Anderson", 4,new ArrayList<>( List.of("David","Ben","Clara","Alex"))));
+        courseList.add(new Course(110, "Discrete Mathematics", "Prof. Thomas", 5, new ArrayList<>(List.of("Ivy","Clara"))));
+
+    }
+
+    public int findCourseById(int id){
+        int index = -1;
+        for(int i =0; i < courseList.size();i++){
+            if(courseList.get(i).getCourseId()== id){
+                index = i;
+            }
+        }
+        return index;
+
+    }
+
+    public void addToCourse(int courseId,String name ){
+       Student foundedStudent = studentList.stream().filter(student -> student.getName().equals(name)).findFirst().orElse(null);
+       if(foundedStudent == null) {System.out.println("Student doesn't exist"); return;}
+       var index =findCourseById(courseId);
+        courseList.get(index).setStudentListCourse("Javad");
+
+
+    }
+
+    public void removeFromCourse(String name,int courseId){
+        Student foundedStudent = studentList.stream().filter(student -> student.getName().equals(name)).findFirst().orElse(null);
+        if(foundedStudent == null) {System.out.println("Student doesn't exist"); return;}
+        var index =findCourseById(courseId);
+        courseList.get(index).studentListCourse.removeIf(list -> list.equals(name));
+        System.out.println("student "+ foundedStudent + " is removed from course by id" + courseId);
+
+
+
 
     }
 
@@ -77,4 +111,18 @@ public class Database {
           System.out.println("No student with id: "+ id + " was found");
     }
 
+
+    public void sortCoursesByCredit(){
+   courseList.stream().sorted(Comparator.comparingInt(Course::getCredits)).forEach(System.out::println);
+
+    }
+
+    public void sortCoursesByAttendance(){
+        courseList.stream().sorted(Comparator.comparingInt(course ->course.getStudentListCourse().size())).forEach(System.out::println);
+
+    }
+
+    public void sortStudentByPga(){
+        studentList.stream().sorted(Comparator.comparing(Student::getGpa)).forEach(System.out::println);
+    }
 }

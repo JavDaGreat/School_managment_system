@@ -28,6 +28,26 @@ public class Management {
         data.putStudent(id,name,age,gpa);
     }
 
+    public void addToNewCourse (int courseId,String name){
+        data.addToCourse(courseId,name);
+
+    }
+    public void removeStudentFromCourse(String name,int courseId){
+
+        data.removeFromCourse(name,courseId);
+    }
+
+    public void sortByCredit (){
+        data.sortCoursesByCredit();
+    }
+    public void sortByStudents (){
+        data.sortCoursesByAttendance();
+    }
+
+    public void sortStudentsbugpda (){
+        data.sortStudentByPga();
+    }
+
 
 
 }
